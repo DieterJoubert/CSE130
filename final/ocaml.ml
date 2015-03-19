@@ -128,4 +128,10 @@ let rec fold f b d =
   | Empty -> b
   | Node(k,v,l,r) -> fold f (f k v (fold f b l)) r
 
-
+let rec lookup ns name =
+   match ns with
+   | EmptyNameSpace -> raise NotFound
+   | Info ([],parent_ns) -> lookup parent_ns name
+   | Info ((s,v)::t, parent_ns) ->
+          if s = name then v
+          else lookup (Info (t, parent_ns)) name

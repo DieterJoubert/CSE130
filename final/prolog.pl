@@ -70,9 +70,25 @@ segment(L,[_|T]) :- segment(L,T).
 
 %%%%%%%%%%%%% WINTER 2011 %%%%%%%%%%%%%%%%
 
+% Problem 5
+% a
+sat(var(X)) :- X = 1.
+sat(not(var(X))) :- X = 0.
 
+sat(and([])).
+sat(and([X | Tail])) :- sat(X), sat(and(Tail)).
 
+sat(or([])) :- fail.
+sat(or([X | Tail])) :- sat(X).
+sat(or([_ | Tail])) :- sat(or(Tail)).
+ 
+% b
+bool(X) :- X = 0.
+bool(X) :- X = 1.
+bools([]).
+bools([X | Tail]) :- bool(X), bools(Tail).
 
-
-
+% c
+allsat([], _).
+allsat(L, F) :- bools(L), sat(F).
 

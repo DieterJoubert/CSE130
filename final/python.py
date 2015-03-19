@@ -337,3 +337,10 @@ def fill_region(img, oldcolor, newcolor, x, y):
             pass
     return img
 
+let rec lookup ns name =
+   match ns with
+   | EmptyNameSpace -> raise NotFound
+   | Info ([],parent_ns) -> lookup parent_ns name
+   | Info ((s,v)::t, parent_ns) ->
+          if s = name then v
+          else lookup (Info (t, parent_ns)) name
